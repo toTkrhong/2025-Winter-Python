@@ -1,23 +1,20 @@
 import sys
-input = sys.stdin.readline
+from collections import Counter
+
+input = sys.stdin.read
 output = sys.stdout.write
 
-n = int(input())
-given_card = list(map(int, input().split()))
+# 한 번에 모든 입력을 가져오기
+data = input().split()
 
-card_dict = {}
+# 입력 데이터 분할
+n = int(data[0])
+given_card = map(int, data[1:n+1])  # 리스트 대신 map 사용
+m = int(data[n+1])
+finding_card = map(int, data[n+2:n+2+m])  # 리스트 대신 map 사용
 
-m = int(input())
-finding_card = list(map(int, input().split()))
+# 카드 개수 세기
+card_dict = Counter(given_card)  # Counter를 사용해 자동으로 개수 세기
 
-for item in given_card:
-    if item not in card_dict:
-        card_dict[item] = 1
-    else:
-        card_dict[item] += 1
-
-for item in finding_card:
-    if item in card_dict:
-        output(str(card_dict[item]) + " ")
-    else:
-        output("0 ")
+# 결과 문자열을 한 번에 출력
+output(" ".join(str(card_dict[item]) if item in card_dict else "0" for item in finding_card) + "\n")
